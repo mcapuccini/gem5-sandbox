@@ -1,2 +1,2 @@
 # gem5-sandbox
-Sandbox for gem5
+Sandbox for gem5.
