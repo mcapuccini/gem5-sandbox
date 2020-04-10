@@ -1,5 +1,5 @@
 {
-	"name": "dlr-sandbox",
+	"name": "gem5-sandbox",
 	"context": "..",
 	"dockerFile": "Dockerfile",
 	"settings": { 
@@ -12,6 +12,5 @@
 		"ms-python.python",
 		"ms-azuretools.vscode-docker"
 	],
-	"containerEnv": { "DISPLAY": ":1" },
 	"mounts": ["source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=default"]
 }
