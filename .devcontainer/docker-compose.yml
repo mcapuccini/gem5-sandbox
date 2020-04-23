@@ -8,5 +8,6 @@ services:
                 - mcapuccini/gem5-sandbox
         volumes:
             - ..:/workspace:cached
+            - ~/.ssh:/home/default/.ssh
         user: default
         command: /bin/sh -c "while sleep 1000; do :; done"
