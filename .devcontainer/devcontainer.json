@@ -12,6 +12,6 @@
 	"extensions": [
 		"ms-python.python",
 		"ms-azuretools.vscode-docker",
-		"mauve.terraform"
+		"4ops.terraform"
 	]
 }
