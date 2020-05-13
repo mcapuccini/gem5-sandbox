@@ -11,5 +11,5 @@
 		"ms-python.python",
 		"ms-azuretools.vscode-docker"
 	],
-	"mounts": ["source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=default"]
+	"mounts": ["source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/default/.ssh,type=bind,consistency=default"]
 }
