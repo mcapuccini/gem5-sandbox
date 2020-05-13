@@ -1,8 +1,6 @@
 {
 	"name": "gem5-sandbox",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "development",
-  	"workspaceFolder": "/workspace",
+	"image": "mcapuccini/gem5-sandbox",
 	"remoteUser": "default",
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash",
@@ -11,7 +9,7 @@
 	},
 	"extensions": [
 		"ms-python.python",
-		"ms-azuretools.vscode-docker",
-		"4ops.terraform"
-	]
+		"ms-azuretools.vscode-docker"
+	],
+	"mounts": ["source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=default"]
 }
