@@ -1,5 +1,2 @@
 **/m5out
-**/.terraform
-**/*.tfvars
-**/*.tfstate
-**/*.tfstate.backup
+rc

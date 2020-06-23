@@ -11,7 +11,7 @@ ARG USER_GID=$USER_UID
 
 # Gem5
 ARG GEM_REPO=https://github.com/NicolasDenoyelle/gem5.git
-ARG GEM_BRANCH=memtrace
+ARG GEM_BRANCH=numa
 ARG GEM_ISA=X86
 
 # Configure apt
