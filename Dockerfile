@@ -11,8 +11,14 @@ ARG USER_GID=$USER_UID
 
 # Gem5
 ARG GEM_REPO=https://github.com/NicolasDenoyelle/gem5.git
-ARG GEM_BRANCH=numa
+ARG GEM_BRANCH=memtrace
 ARG GEM_ISA=X86
+
+# Parsec
+ARG PARSEC_VERSION=3.0
+ENV PARSECDIR=/opt/parsec-${PARSEC_VERSION}
+ENV PATH=${PATH}:${PARSECDIR}/bin
+ENV MANPATH=${MANPATH}:${PARSECDIR}/man
 
 # Configure apt
 RUN apt-get update \
@@ -46,14 +52,22 @@ RUN apt-get update \
     pylint \
     autopep8 \
     #
+    # Install docker binary
+    && sh -c 'curl -L https://download.docker.com/linux/static/stable/x86_64/docker-19.03.9.tgz | tar xvz docker/docker' \
+    && cp docker/docker /usr/local/bin \
+    && rm -R docker \
+    #
+    # Install PARSEC
+    && sh -c 'curl -L http://parsec.cs.princeton.edu/download/${PARSEC_VERSION}/parsec-${PARSEC_VERSION}-core.tar.gz | tar -xvz -C /opt' \
+    #
     # Create a non-root user to use if preferred
     && groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
-    && chmod 0440 /etc/sudoers.d/$USERNAME \
-    #
-    # Build gem5
-    && git clone --single-branch --branch $GEM_BRANCH $GEM_REPO \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+# Install gem5
+RUN git clone --single-branch --branch $GEM_BRANCH $GEM_REPO \
     && cd gem5 && scons -j$(nproc) build/${GEM_ISA}/gem5.opt \
     && mv build/${GEM_ISA}/gem5.opt /usr/local/bin \
     && cd .. && rm -rf gem5
