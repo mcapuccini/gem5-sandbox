@@ -12,7 +12,6 @@ ARG USER_GID=$USER_UID
 # Gem5
 ARG GEM5_REPO=https://github.com/NicolasDenoyelle/gem5.git
 ARG GEM5_BRANCH=memtrace
-ARG GEM5_ISA=X86
 ENV GEM5_HOME=/opt/gem5
 
 # Parsec
