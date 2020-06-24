@@ -1,6 +1,6 @@
 {
 	"name": "gem5-sandbox",
-	"image": "mcapuccini/gem5-sandbox",
+	"dockerFile": "../Dockerfile",
 	"remoteUser": "default",
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash",

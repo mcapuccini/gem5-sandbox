@@ -10,9 +10,10 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 # Gem5
-ARG GEM_REPO=https://github.com/NicolasDenoyelle/gem5.git
-ARG GEM_BRANCH=memtrace
-ARG GEM_ISA=X86
+ARG GEM5_REPO=https://github.com/NicolasDenoyelle/gem5.git
+ARG GEM5_BRANCH=memtrace
+ARG GEM5_ISA=X86
+ENV GEM5_HOME=/opt/gem5
 
 # Parsec
 ARG PARSEC_VERSION=3.0
@@ -59,18 +60,14 @@ RUN apt-get update \
     #
     # Install PARSEC
     && sh -c 'curl -L http://parsec.cs.princeton.edu/download/${PARSEC_VERSION}/parsec-${PARSEC_VERSION}-core.tar.gz | tar -xvz -C /opt' \
+    # Clone gem5
+    && git -C $(dirname $GEM5_HOME) clone --single-branch --branch $GEM5_BRANCH $GEM5_REPO $(basename $GEM5_HOME) \
     #
     # Create a non-root user to use if preferred
     && groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
-
-# Install gem5
-RUN git clone --single-branch --branch $GEM_BRANCH $GEM_REPO \
-    && cd gem5 && scons -j$(nproc) build/${GEM_ISA}/gem5.opt \
-    && mv build/${GEM_ISA}/gem5.opt /usr/local/bin \
-    && cd .. && rm -rf gem5
 
 # Copy code in the container
 COPY ./ /home/$USERNAME/gem5-sandbox/
